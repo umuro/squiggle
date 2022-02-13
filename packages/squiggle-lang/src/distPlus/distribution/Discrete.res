@@ -207,6 +207,7 @@ module T = Dist({
 
   let mean = (t: t): float => {
     let s = getShape(t)
+    Js.log2("MEANDiscrete!!!", s);
     E.A.reducei(s.xs, 0.0, (acc, x, i) => acc +. x *. s.ys[i])
   }
   let variance = (t: t): float => {

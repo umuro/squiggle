@@ -193,6 +193,7 @@ module T = Dist({
   let mean = (t: t) => {
     let indefiniteIntegralStepwise = (p, h1) => h1 *. p ** 2.0 /. 2.0
     let indefiniteIntegralLinear = (p, a, b) => a *. p ** 2.0 /. 2.0 +. b *. p ** 3.0 /. 3.0
+    Js.log3("MeanContinuous", t, "HIHIIIII")
 
     XYShape.Analysis.integrateContinuousShape(
       ~indefiniteIntegralStepwise,

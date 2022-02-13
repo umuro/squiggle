@@ -210,8 +210,8 @@ module Render = {
 let rec toLeaf = (
   evaluationParams: ExpressionTypes.ExpressionTree.evaluationParams,
   node: t,
-): result<t, string> =>
-  switch node {
+): result<t, string> =>{
+  let foo = switch node {
   // Leaf nodes just stay leaf nodes
   | #SymbolicDist(_)
   | #Function(_)
@@ -219,7 +219,7 @@ let rec toLeaf = (
     Ok(node)
   | #Array(args) =>
     args |> E.A.fmap(toLeaf(evaluationParams)) |> E.A.R.firstErrorOrOpen |> E.R.fmap(r => #Array(r))
-  // Operations nevaluationParamsd to be turned into leaves
+  // Operations evaluation to be turned into leaves
   | #AlgebraicCombination(algebraicOp, t1, t2) =>
     AlgebraicCombination.operationToLeaf(evaluationParams, algebraicOp, t1, t2)
   | #PointwiseCombination(pointwiseOp, t1, t2) =>
@@ -239,6 +239,12 @@ let rec toLeaf = (
     ExpressionTypes.ExpressionTree.Environment.get(evaluationParams.environment, r)
     |> E.O.toResult("Undeclared variable " ++ r)
     |> E.R.bind(_, toLeaf(evaluationParams))
-  | #FunctionCall(name, args) =>
+  | #FunctionCall(name, args) =>{
+    Js.log2("In here??--------------------------------??", args);
     FunctionCall.run(evaluationParams, name, args) |> E.R.bind(_, toLeaf(evaluationParams))
   }
+  }
+  Js.log4("hi", node, "ho", foo);
+  %debugger
+  foo;
+}

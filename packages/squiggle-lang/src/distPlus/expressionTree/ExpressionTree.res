@@ -1,6 +1,7 @@
 open ExpressionTypes.ExpressionTree
 
 let toString = ExpressionTreeBasic.toString
+
 let envs = (samplingInputs, environment) => {
   samplingInputs: samplingInputs,
   environment: environment,
@@ -9,6 +10,7 @@ let envs = (samplingInputs, environment) => {
 
 let toLeaf = (samplingInputs, environment, node: node) =>
   ExpressionTreeEvaluator.toLeaf(envs(samplingInputs, environment), node)
+
 let toShape = (samplingInputs, environment, node: node) =>
   switch toLeaf(samplingInputs, environment, node) {
   | Ok(#RenderedDist(shape)) => Ok(shape)

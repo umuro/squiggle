@@ -147,12 +147,15 @@ module T = Dist({
       Continuous.T.mapY(~integralSumCacheFn, ~integralCacheFn, ~fn),
     ))
 
-  let mean = (t: t): float =>
-    switch t {
+  let mean = (t: t): float =>{
+    let foo = switch t {
     | Mixed(m) => Mixed.T.mean(m)
     | Discrete(m) => Discrete.T.mean(m)
     | Continuous(m) => Continuous.T.mean(m)
     }
+    Js.log4("MEANMEAN-----------------------------MEAN", t, "GOTIT", foo);
+    foo
+  }
 
   let variance = (t: t): float =>
     switch t {
@@ -200,7 +203,7 @@ let sampleNRendered = (n, dist) => {
 let operate = (distToFloatOp: ExpressionTypes.distToFloatOperation, s): float =>
   switch distToFloatOp {
   | #Pdf(f) => pdf(f, s)
-  | #Cdf(f) => pdf(f, s)
+  | #Cdf(f) => cdf(f, s)
   | #Inv(f) => inv(f, s)
   | #Sample => sample(s)
   | #Mean => T.mean(s)
